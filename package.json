@@ -1,0 +1,14 @@
+{
+  "name": "recipe-catalog",
+  "version": "1.0.0",
+  "description": "Catalog of recipes scraped from the internet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin Stubblefield",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
