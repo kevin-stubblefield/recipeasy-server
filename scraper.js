@@ -6,7 +6,7 @@ axios.get('https://www.budgetbytes.com/category/recipes/').then((response) => {
 
     const recipeUrls = $('.archive-post > a').map((index, element) => element.attribs.href).get();
     
-    axios.get(recipeUrls[0]).then((response) => {
+    axios.get(recipeUrls[1]).then((response) => {
         const $$ = cheerio.load(response.data);
 
         const recipeSource = 'Budget Bytes';
@@ -70,5 +70,15 @@ axios.get('https://www.budgetbytes.com/category/recipes/').then((response) => {
             return instruction;
         }).get();
         console.log(recipeInstructions);
+
+        const recipeNutrition = $$('span.wprm-nutrition-label-text-nutrition-container').map((index, element) => {
+            const nutrition = {}
+            const details = $$(element).children('span').map((i, elem) => $$(elem).text());
+            nutrition.label = details[0];
+            nutrition.value = details[1];
+            nutrition.unit = details[2];
+            return nutrition;
+        }).get();
+        console.log(recipeNutrition);
     });
 });
