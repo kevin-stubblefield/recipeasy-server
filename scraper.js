@@ -30,20 +30,6 @@ axios.get('https://www.budgetbytes.com/category/recipes/').then((response) => {
         const recipeServings = $$('span.wprm-recipe-servings').text();
         console.log(recipeServings);
 
-        // process ingredient groups
-        /* 
-            recipeIngredientGroups = {
-                heading: string,
-                ingredients: array<ingredient>
-            }
-
-            ingredient = {
-                amount: string,
-                unit: string,
-                name: string
-            }
-        */
-
         const recipeIngredientGroups = [];
         $$('.wprm-recipe-ingredient-group').each((index, element) => {
             const recipeIngredientGroup = {};
