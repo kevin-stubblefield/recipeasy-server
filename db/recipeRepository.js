@@ -22,7 +22,7 @@ class RecipeRepository {
     }
 
     async insert(recipe) {
-        return this.dao.run(
+        return await this.dao.run(
             `
             INSERT INTO recipes 
                 (source_id, source_name, name, summary, author, prep_time, cook_time, servings, serving_size)

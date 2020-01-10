@@ -21,7 +21,7 @@ class NutritionRepository {
     }
 
     async insert(nutrition, recipeId) {
-        return this.dao.run(
+        return await this.dao.run(
             `
             INSERT INTO nutrition_info
                 (label, value, unit, recipe_id)

@@ -19,7 +19,7 @@ class IngredientGroupRepository {
     }
 
     async insert(ingredientGroup, recipeId) {
-        return this.dao.run(
+        return await this.dao.run(
             `
             INSERT INTO ingredient_groups 
                 (heading, recipe_id)

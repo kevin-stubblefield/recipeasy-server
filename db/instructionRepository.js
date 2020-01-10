@@ -20,7 +20,7 @@ class InstructionRepository {
     }
 
     async insert(instruction, recipeId) {
-        return this.dao.run(
+        return await this.dao.run(
             `
             INSERT INTO instructions 
                 (step, description, recipe_id)
