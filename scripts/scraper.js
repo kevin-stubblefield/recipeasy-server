@@ -3,7 +3,7 @@ const axios = require('axios');
 const fs = require('fs').promises;
 const util = require('util');
 
-for (let i = 19; i <= 23; i++) {
+for (let i = 1; i <= 4; i++) {
     let pageUrl;
     if (i === 1) {
         pageUrl = 'https://www.budgetbytes.com/category/recipes';
@@ -18,9 +18,9 @@ for (let i = 19; i <= 23; i++) {
 
         const recipeUrls = $('.archive-post > a').map((index, element) => element.attribs.href).get();
 
-        recipeUrls.filter(value => !value.includes('meal-prep') && !value.includes('how-to'))
-        .forEach(url => {
-            axios.get(url).then(async (response) => {
+        return Promise.all(
+        recipeUrls.filter(value => !value.includes('meal-prep') && !value.includes('how-to')).map(url => {
+            axios.get(url).then((response) => {
                 const $$ = cheerio.load(response.data);
 
                 const recipes = $$('div.wprm-recipe-container').map((idx, el) => {
@@ -76,7 +76,7 @@ for (let i = 19; i <= 23; i++) {
                         const instruction = {};
                         instruction.step = $$(element).attr('id').slice($$(element).attr('id').length - 1);
                         
-                        const description = $$(element).find('.wprm-recipe-instruction-text > span').text();
+                        let description = $$(element).find('.wprm-recipe-instruction-text > span').text();
                         if (!description) {
                             description = $$(element).find('.wprm-recipe-instruction-text').text();
                         }
@@ -113,10 +113,21 @@ for (let i = 19; i <= 23; i++) {
 
                 if (recipes.length > 0) {
                     let json = JSON.stringify(recipes);
-                    await fs.writeFile(`recipes\\${recipes[0].name.replace(/["\\/?.,;:'\[\]{}|~`]/gi, '')}.json`, json, 'utf8');
-                    console.log('file complete');
+                    fs.writeFile(`recipes\\${recipes[0].name.replace(/["\\/?.,;:'\[\]{}|~`]/gi, '')}.json`, json, 'utf8').then(() => {
+                        console.log('file complete');
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                    
                 }
+            }).catch((err) => {
+                console.log('error on ' + err.config.url);
+                fs.writeFile('errors\\errorUrls.txt', err.config.url + '\r\n', { flag: 'a'}).then(() => {
+                    console.log('error file written');
+                });
             });
-        });
+        }));
+    }).catch((err) => {
+        console.log(err);
     });
 }
