@@ -75,7 +75,13 @@ for (let i = 19; i <= 23; i++) {
                     const recipeInstructions = $$(el).find('ul.wprm-recipe-instructions > li').map((index, element) => {
                         const instruction = {};
                         instruction.step = $$(element).attr('id').slice($$(element).attr('id').length - 1);
-                        instruction.description = $$(element).find('.wprm-recipe-instruction-text > span').text();
+                        
+                        const description = $$(element).find('.wprm-recipe-instruction-text > span').text();
+                        if (!description) {
+                            description = $$(element).find('.wprm-recipe-instruction-text').text();
+                        }
+                        
+                        instruction.description = description;
                         return instruction;
                     }).get();
                     // console.log(recipeInstructions);

@@ -6,7 +6,7 @@ const Instructions = require('../db/instructionRepository');
 const NutritionInfo = require('../db/nutritionRepository');
 
 async function init() {
-    const dao = new DAO('../database.rec');
+    const dao = new DAO('./database.rec');
     const recipes = new Recipes(dao);
     const ingredientGroups = new IngredientGroups(dao);
     const ingredients = new Ingredients(dao);
@@ -18,6 +18,9 @@ async function init() {
     await ingredients.createTable();
     await instructions.createTable();
     await nutritionInfo.createTable();
+
+    dao.close();
+    console.log('tables created');
 }
 
 init();
