@@ -136,11 +136,6 @@ async function fetchRecipesOnPage(url) {
     }).get();
     // console.log(util.inspect(recipes, false, null, true));
 
-    // if (recipes.length > 0) {
-    //     let json = JSON.stringify(recipes);
-    //     await fs.writeFile(`recipes\\${recipes[0].name.replace(/["\\/?.,;:'\[\]{}|~`]/gi, '')}.json`, json, 'utf8');
-    // }
-
     return recipes;
 }
 
