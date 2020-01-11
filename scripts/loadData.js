@@ -6,6 +6,8 @@ const Ingredients = require('../db/ingredientRepository');
 const Instructions = require('../db/instructionRepository');
 const NutritionInfo = require('../db/nutritionRepository');
 
+const cliProgress = require('cli-progress');
+
 async function loadData() {
     const dao = new DAO('./database.rec');
     const recipes = new Recipes(dao);
@@ -15,10 +17,18 @@ async function loadData() {
     const nutritionInfo = new NutritionInfo(dao);
 
     const filenames = await fs.readdir('./recipes');
+    const bar = new cliProgress.SingleBar({
+        format: 'ETL Progress |{bar}| {percentage}% | {value}/{total} Files Processed | {duration}s',
+        hideCursor: true
+    }, cliProgress.Presets.shades_classic);
+    bar.start(filenames.length, 0);
+
     for (const filename of filenames) {
         const file = await fs.readFile(`./recipes/${filename}`);
         const recipeData = JSON.parse(file.toString('utf-8'));
         
+        // use a transcation for bulk insert
+        dao.beginTransaction();
         for (const recipe of recipeData) {
             const data = await recipes.insert(recipe);
             const recipeId = data.id;
@@ -40,8 +50,11 @@ async function loadData() {
             }
         }
 
-        break;
+        dao.commit();
+        bar.increment();
     }
+
+    bar.stop();
 }
 
 loadData();

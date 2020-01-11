@@ -1,4 +1,4 @@
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3');
 
 class DAO {
     constructor(filepath) {
@@ -20,6 +20,38 @@ class DAO {
                     reject(err);
                 } else {
                     resolve({ id: this.lastID });
+                }
+            });
+        });
+    }
+
+    serialize(callback) {
+        this.db.serialize(callback);
+    }
+
+    beginTransaction() {
+        return new Promise((resolve, reject) => {
+            this.db.run('begin transaction', function(err) {
+                if (err) {
+                    console.log('Error running sql ' + sql);
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
+    commit() {
+        return new Promise((resolve, reject) => {
+            this.db.run('commit', function(err) {
+                if (err) {
+                    console.log('Error running sql ' + sql);
+                    console.log(err);
+                    reject(err);
+                } else {
+                    resolve();
                 }
             });
         });
