@@ -5,7 +5,7 @@ const cliProgress = require('cli-progress');
 const util = require('util');
 
 async function scrapeData() {
-    for (let i = 22; i <= 23; i++) {
+    for (let i = 1; i <= 21; i++) {
         const bar = new cliProgress.SingleBar({
             format: 'Recipe Progress | Page ' + i + ' |{bar}| {percentage}% | {value}/{total} Recipes | {duration}s',
             hideCursor: true
@@ -56,6 +56,8 @@ async function fetchRecipesOnPage(url) {
 
         const recipeSource = 'Budget Bytes';
         // console.log(recipeSource);
+
+        const recipeSourceUrl = url;
 
         const recipeName = $(el).find('h2.wprm-recipe-name').text();
         // console.log(recipeName);
@@ -122,6 +124,7 @@ async function fetchRecipesOnPage(url) {
         
         recipe.id = recipeId;
         recipe.source = recipeSource;
+        recipe.sourceUrl = recipeSourceUrl;
         recipe.name = recipeName;
         recipe.summary = recipeSummary;
         recipe.author = recipeAuthor;
