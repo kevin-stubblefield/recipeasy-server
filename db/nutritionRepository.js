@@ -30,6 +30,13 @@ class NutritionRepository {
             [nutrition.label, nutrition.value, nutrition.unit, recipeId]
         );
     }
+
+    async fetchByRecipeId(recipeId) {
+        return await this.dao.all(
+            'SELECT * FROM nutrition_info WHERE recipe_id = ?',
+            [recipeId]
+        );
+    }
 }
 
 module.exports = NutritionRepository;

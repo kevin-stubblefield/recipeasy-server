@@ -35,6 +35,19 @@ class RecipeRepository {
             ]
         );
     }
+
+    async fetchAll() {
+        return await this.dao.all(
+            'SELECT * FROM recipes'
+        );
+    }
+
+    async fetchById(id) {
+        return await this.dao.get(
+            'SELECT * FROM recipes WHERE id = ?',
+            [id]
+        );
+    }
 }
 
 module.exports = RecipeRepository;

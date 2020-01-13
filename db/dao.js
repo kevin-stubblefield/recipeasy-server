@@ -33,7 +33,7 @@ class DAO {
                     console.log(err);
                     reject(err);
                 } else {
-                    resolve(result);
+                    resolve(this.toCamelCase(result));
                 }
             });
         });
@@ -47,7 +47,7 @@ class DAO {
                     console.log(err);
                     reject(err);
                 } else {
-                    resolve(results);
+                    resolve(this.toCamelCase(results));
                 }
             });
         })
@@ -88,6 +88,43 @@ class DAO {
     close() {
         this.db.close();
     }
+
+    toCamelCase(o) {
+        // converting to camel case pulled from https://matthiashager.com/converting-snake-case-to-camel-case-object-keys-with-javascript
+        // May put this in a new file in the future, but for now, this should be fine
+        if (this.isObject(o)) {
+            const n = {};
+
+            Object.keys(o)
+            .forEach((k) => {
+                n[this.toCamel(k)] = this.toCamelCase(o[k]);
+            });
+
+            return n;
+        } else if (this.isArray(o)) {
+            return o.map((i) => {
+                return this.toCamelCase(i);
+            });
+        }
+
+        return o;
+    }
+
+    toCamel(s) {
+        return s.replace(/([-_][a-z])/ig, ($1) => {
+            return $1.toUpperCase()
+                .replace('-', '')
+                .replace('_', '');
+        });
+    };
+
+    isObject(o) {
+        return o === Object(o) && !this.isArray(o) && typeof o !== 'function';
+    };
+
+    isArray(a) {
+        return Array.isArray(a);
+    };
 }
 
 module.exports = DAO;

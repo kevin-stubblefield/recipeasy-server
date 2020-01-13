@@ -28,6 +28,13 @@ class IngredientGroupRepository {
             [ingredientGroup.heading, recipeId]
         );
     }
+
+    async fetchByRecipeId(recipeId) {
+        return await this.dao.all(
+            'SELECT * FROM ingredient_groups WHERE recipe_id = ?',
+            [recipeId]
+        );
+    }
 }
 
 module.exports = IngredientGroupRepository;

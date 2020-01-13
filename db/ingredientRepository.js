@@ -30,6 +30,13 @@ class IngredientRepository {
             [ingredient.amount, ingredient.unit, ingredient.name, ingredientGroupId]
         );
     }
+
+    async fetchByIngredientGroupId(ingredientGroupId) {
+        return await this.dao.all(
+            'SELECT * FROM ingredients WHERE ingredient_group_id = ?',
+            [ingredientGroupId]
+        );
+    }
 }
 
 module.exports = IngredientRepository;

@@ -29,6 +29,13 @@ class InstructionRepository {
             [instruction.step, instruction.description, recipeId]
         );
     }
+
+    async fetchByRecipeId(recipeId) {
+        return await this.dao.all(
+            'SELECT * FROM instructions WHERE recipe_id = ?',
+            [recipeId]
+        );
+    }
 }
 
 module.exports = InstructionRepository;
