@@ -4,6 +4,10 @@
     <%- include('../partials/head', { title: title }) %>
 </head>
 <body>
-    
+    <% locals.recipes.forEach(function(recipe) { %>
+        <article>
+            <%= recipe.name %>
+        </article>
+    <% }); %>
 </body>
 </html>
