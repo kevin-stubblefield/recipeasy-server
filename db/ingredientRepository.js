@@ -31,10 +31,10 @@ class IngredientRepository {
         );
     }
 
-    async fetchByIngredientGroupId(ingredientGroupId) {
+    async fetchByIngredientGroupIds(ingredientGroupIds) {
         return await this.dao.all(
-            'SELECT * FROM ingredients WHERE ingredient_group_id = ?',
-            [ingredientGroupId]
+            `SELECT * FROM ingredients WHERE ingredient_group_id IN (${ingredientGroupIds.map(() => '?').join(',')})`,
+            ingredientGroupIds
         );
     }
 }

@@ -16,19 +16,23 @@ class RecipeController {
     }
 
     async getAllRecipes() {
-        let results = [];
-        this.dao.beginTransaction();
         const recipes = await this.recipeRepository.fetchAll();
+        return recipes;
+    }
+
+    async buildRecipesObject(recipes) {
+        let results = [];
         for (const recipe of recipes) {
             recipe.ingredientGroups = await this.ingredientGroupsRepository.fetchByRecipeId(recipe.id);
+            const ingredientGroupIds = recipe.ingredientGroups.map((ingredientGroup) => ingredientGroup.id);
+            const ingredients = await this.ingredientsRepository.fetchByIngredientGroupIds(ingredientGroupIds);
             for (const ingredientGroup of recipe.ingredientGroups) {
-                recipe.ingredientGroups.ingredients = await this.ingredientsRepository.fetchByIngredientGroupId(ingredientGroup.id);
+                ingredientGroup.ingredients = ingredients.filter((ingredient) => ingredient.ingredientGroupId === ingredientGroup.id);
             }
             recipe.instructions = await this.instructionsRepository.fetchByRecipeId(recipe.id);
             recipe.nutritionInfo = await this.nutritionInfoRepository.fetchByRecipeId(recipe.id);
             results.push(recipe);
         }
-        this.dao.commit();
         return results;
     }
 }
