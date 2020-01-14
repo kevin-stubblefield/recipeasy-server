@@ -6,6 +6,11 @@
 <body>
     <article>
         <%= recipe.name %>
+        <% if (recipe.ingredientGroups.length > 1) { %>
+            <%- include('../partials/ingredientGroups', { recipe: recipe }) %>
+        <% } else { %>
+            <%- include('../partials/singleIngredientGroup', { recipe: recipe }) %>
+        <% } %>
     </article>
 </body>
 </html>
