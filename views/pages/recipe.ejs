@@ -6,11 +6,21 @@
 <body>
     <article>
         <h1><%= recipe.name %></h1>
+        <section id="ingredients">
         <% if (recipe.ingredientGroups.length > 1) { %>
             <%- include('../partials/ingredientGroups', { recipe: recipe }) %>
         <% } else { %>
             <%- include('../partials/singleIngredientGroup', { recipe: recipe }) %>
         <% } %>
+        </section>
+        <section id="instructions">
+            <ol>
+                <% recipe.instructions.forEach(function(instruction) { %>
+                    <li><%= instruction.description %></li>
+                <% }); %>
+            </ol>
+        </section>
+        <section id="nutrition"></section>
     </article>
 </body>
 </html>

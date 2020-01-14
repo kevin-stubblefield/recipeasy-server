@@ -32,7 +32,7 @@ class InstructionRepository {
 
     async fetchByRecipeId(recipeId) {
         return await this.dao.all(
-            'SELECT * FROM instructions WHERE recipe_id = ?',
+            'SELECT * FROM instructions WHERE recipe_id = ? ORDER BY step',
             [recipeId]
         );
     }
