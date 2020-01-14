@@ -6,7 +6,7 @@
 <body>
     <% locals.recipes.forEach(function(recipe) { %>
         <article>
-            <%= recipe.name %>
+            <a href="/<%= recipe.id %>"><%= recipe.name %></a>
         </article>
     <% }); %>
 </body>
