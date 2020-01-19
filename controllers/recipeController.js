@@ -28,7 +28,6 @@ class RecipeController {
     
     async searchRecipes(query) {
         const recipes = await this.recipeRepository.search(query);
-        console.log(recipes);
         return recipes;
     }
 

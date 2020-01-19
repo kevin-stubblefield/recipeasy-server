@@ -4,6 +4,7 @@
     <%- include('../partials/head', { title: title }) %>
 </head>
 <body>
+    <%- include('../partials/header') %>
     <% locals.recipes.forEach(function(recipe) { %>
         <article>
             <a href="/<%= recipe.id %>"><%= recipe.name %></a>
