@@ -48,6 +48,21 @@ class RecipeRepository {
             [id]
         );
     }
+
+    async search(query) {
+        return await this.dao.all(
+            `
+            SELECT * FROM recipes
+            WHERE id IN (
+                SELECT r.id FROM recipes r
+                JOIN ingredient_groups ig ON r.id = ig.recipe_id
+                JOIN ingredients i ON ig.id = i.ingredient_group_id
+                WHERE i.name LIKE ? OR r.name LIKE ?
+            )
+            `,
+            ['%' + query + '%', '%' + query + '%']
+        );
+    }
 }
 
 module.exports = RecipeRepository;

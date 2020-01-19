@@ -25,6 +25,12 @@ class RecipeController {
         const result = this.buildRecipeObject(recipe);
         return result;
     }
+    
+    async searchRecipes(query) {
+        const recipes = await this.recipeRepository.search(query);
+        console.log(recipes);
+        return recipes;
+    }
 
     async buildRecipeObjects(recipes) {
         let results = [];
