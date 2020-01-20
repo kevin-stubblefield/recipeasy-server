@@ -1,4 +1,5 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const recipeRoutes = require('./routes/recipes.js');
 
 const PORT = process.env.port || 3000;
