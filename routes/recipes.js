@@ -6,7 +6,8 @@ router.get('/', async (req, res) => {
     const recipeController = new RecipeController();
     const recipes = await recipeController.getAllRecipes();
     // console.log(recipes);
-    return res.render('pages/index', { title: 'Recipe Catalog', recipes: recipes });
+    // return res.render('pages/index', { title: 'Recipe Catalog', recipes: recipes });
+    return res.json(recipes);
 });
 
 router.get('/search', async (req, res) => {
