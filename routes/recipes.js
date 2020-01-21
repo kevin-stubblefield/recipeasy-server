@@ -22,7 +22,8 @@ router.get('/:id', async (req, res) => {
     const recipeController = new RecipeController();
     const recipe = await recipeController.getRecipeById(req.params.id);
     // console.log(recipe);
-    return res.render('pages/recipe', { title: recipe.name, recipe: recipe });
+    // return res.render('pages/recipe', { title: recipe.name, recipe: recipe });
+    return res.json(recipe);
 });
 
 module.exports = router;
