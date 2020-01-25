@@ -14,7 +14,8 @@ router.get('/search', async (req, res) => {
     const query = req.query.q;
     const recipeController = new RecipeController();
     const recipes = await recipeController.searchRecipes(query);
-    return res.render('pages/index', { title: query + ' - Recipe Catalog', recipes: recipes });
+    // return res.render('pages/index', { title: query + ' - Recipe Catalog', recipes: recipes });
+    return res.json(recipes);
 });
 
 router.get('/:id', async (req, res) => {
