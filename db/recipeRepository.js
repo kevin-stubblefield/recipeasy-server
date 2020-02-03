@@ -10,6 +10,7 @@ class RecipeRepository {
             source_id INTEGER,
             source_name TEXT,
             source_url TEXT,
+            image_src TEXT,
             name TEXT,
             summary TEXT,
             author TEXT,
@@ -26,11 +27,11 @@ class RecipeRepository {
         return await this.dao.run(
             `
             INSERT INTO recipes 
-                (source_id, source_name, source_url, name, summary, author, prep_time, cook_time, servings, serving_size)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (source_id, source_name, source_url, image_src, name, summary, author, prep_time, cook_time, servings, serving_size)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `,
             [
-                recipe.id, recipe.source, recipe.sourceUrl, recipe.name, recipe.summary, recipe.author, recipe.prepTime,
+                recipe.id, recipe.source, recipe.sourceUrl, recipe.imageSrc, recipe.name, recipe.summary, recipe.author, recipe.prepTime,
                 recipe.cookTime, recipe.servings, recipe.servingSize
             ]
         );

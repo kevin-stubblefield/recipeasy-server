@@ -5,7 +5,7 @@ const cliProgress = require('cli-progress');
 const util = require('util');
 
 async function scrapeData() {
-    for (let i = 1; i <= 21; i++) {
+    for (let i = 1; i <= 23; i++) {
         const bar = new cliProgress.SingleBar({
             format: 'Recipe Progress | Page ' + i + ' |{bar}| {percentage}% | {value}/{total} Recipes | {duration}s',
             hideCursor: true
@@ -19,6 +19,7 @@ async function scrapeData() {
         }
 
         const recipeUrls = await fetchRecipeUrls(pageUrl);
+
         bar.start(recipeUrls.length, 0);
 
         let usablePagesCount = 0;
@@ -41,11 +42,18 @@ async function fetchRecipeUrls(pageUrl) {
     const response = await axios.get(pageUrl)
     const $ = cheerio.load(response.data);
 
-    return $('.archive-post > a').map((index, element) => element.attribs.href).get();
+    return $('.archive-post > a').map((index, element) => {
+        const href = element.attribs.href;
+        const imageSrc = $(element).find('img').data('lazy-src');
+        return {
+            href,
+            imageSrc
+        }
+    }).get();
 }
 
 async function fetchRecipesOnPage(url) {
-    const response = await axios.get(url);
+    const response = await axios.get(url.href);
     const $ = cheerio.load(response.data);
 
     const recipes = $('div.wprm-recipe-container').map((idx, el) => {
@@ -57,7 +65,9 @@ async function fetchRecipesOnPage(url) {
         const recipeSource = 'Budget Bytes';
         // console.log(recipeSource);
 
-        const recipeSourceUrl = url;
+        const recipeSourceUrl = url.href;
+        
+        const recipeImageSrc = url.imageSrc;
 
         const recipeName = $(el).find('h2.wprm-recipe-name').text();
         // console.log(recipeName);
@@ -125,6 +135,7 @@ async function fetchRecipesOnPage(url) {
         recipe.id = recipeId;
         recipe.source = recipeSource;
         recipe.sourceUrl = recipeSourceUrl;
+        recipe.imageSrc = recipeImageSrc;
         recipe.name = recipeName;
         recipe.summary = recipeSummary;
         recipe.author = recipeAuthor;
