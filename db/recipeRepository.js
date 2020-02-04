@@ -40,7 +40,7 @@ class RecipeRepository {
     async fetchAll() {
         return await this.dao.all(
             `
-            SELECT recipes.id, recipes.name, count(*) AS ingredient_count
+            SELECT recipes.id, recipes.name, recipes.image_src, count(*) AS ingredient_count
             FROM recipes
             JOIN ingredient_groups ON recipes.id = ingredient_groups.recipe_id
             JOIN ingredients ON ingredient_groups.id = ingredients.ingredient_group_id
@@ -60,7 +60,7 @@ class RecipeRepository {
     async search(query) {
         return await this.dao.all(
             `
-            SELECT recipes.id, recipes.name, count(*) AS ingredient_count
+            SELECT recipes.id, recipes.name, recipes.image_src, count(*) AS ingredient_count
             FROM recipes
             JOIN ingredient_groups ON recipes.id = ingredient_groups.recipe_id
             JOIN ingredients ON ingredient_groups.id = ingredients.ingredient_group_id
