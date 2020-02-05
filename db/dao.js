@@ -1,12 +1,15 @@
 const sqlite3 = require('sqlite3');
+const logger = require('../config/winston.js');
+
+const filename = 'dao.js';
 
 class DAO {
     constructor(filepath) {
         this.db = new sqlite3.Database(filepath, (err) => {
             if (err) {
-                console.log('Could not connect to database', err);
+                logger.error(`Could not connect to database ${JSON.stringify(err)} [${filename}]`);
             } else {
-                console.log('Connected to database');
+                logger.debug(`Connected to database [${filename}]`);
             }
         });
     }
@@ -15,8 +18,8 @@ class DAO {
         return new Promise((resolve, reject) => {
             this.db.run(sql, params, function(err) {
                 if (err) {
-                    console.log(`Error running sql: ${sql}`);
-                    console.log(err);
+                    logger.error(`Error running sql: ${sql}`);
+                    logger.error(JSON.stringify(err));
                     reject(err);
                 } else {
                     resolve({ id: this.lastID });
@@ -29,8 +32,8 @@ class DAO {
         return new Promise((resolve, reject) => {
             this.db.get(sql, params, (err, result) => {
                 if (err) {
-                    console.log(`Error running sql: ${sql}`);
-                    console.log(err);
+                    logger.error(`Error running sql: ${sql}`);
+                    logger.error(JSON.stringify(err));
                     reject(err);
                 } else {
                     resolve(this.toCamelCase(result));
@@ -43,8 +46,8 @@ class DAO {
         return new Promise((resolve, reject) => {
             this.db.all(sql, params, (err, results) => {
                 if (err) {
-                    console.log(`Error running sql: ${sql}`);
-                    console.log(err);
+                    logger.error(`Error running sql: ${sql}`);
+                    logger.error(JSON.stringify(err));
                     reject(err);
                 } else {
                     resolve(this.toCamelCase(results));
@@ -61,8 +64,8 @@ class DAO {
         return new Promise((resolve, reject) => {
             this.db.run('begin transaction', function(err) {
                 if (err) {
-                    console.log('Error running sql ' + sql);
-                    console.log(err);
+                    logger.error(`Error running sql: ${sql}`);
+                    logger.error(JSON.stringify(err));
                     reject(err);
                 } else {
                     resolve();
@@ -75,8 +78,8 @@ class DAO {
         return new Promise((resolve, reject) => {
             this.db.run('commit', function(err) {
                 if (err) {
-                    console.log('Error running sql ' + sql);
-                    console.log(err);
+                    logger.error(`Error running sql: ${sql}`);
+                    logger.error(JSON.stringify(err));
                     reject(err);
                 } else {
                     resolve();
