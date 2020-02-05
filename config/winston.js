@@ -35,6 +35,12 @@ const logger = createLogger({
     exitOnError: false
 });
 
+logger.stream = {
+    write: function(message, encoding) {
+        logger.info(message);
+    }
+};
+
 if (process.env.NODE_ENV !== 'production') {
     logger.add(new transports.Console(options.console));
 }
