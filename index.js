@@ -5,6 +5,8 @@ const app = express();
 const recipeRoutes = require('./routes/recipes.js');
 const logger = require('./config/winston.js');
 
+const filename = 'index.js';
+
 const PORT = process.env.port || 3000;
 
 app.set('view engine', 'ejs');
@@ -15,5 +17,5 @@ app.use(helmet());
 app.use('/', recipeRoutes);
 
 app.listen(PORT, () => {
-    logger.warn(`[index.js] Server listening on port ${PORT}`);
+    logger.info(`Server listening on port ${PORT} [${filename}]`);
 });
