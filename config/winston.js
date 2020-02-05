@@ -30,10 +30,13 @@ const options = {
 
 const logger = createLogger({
     transports: [
-        new transports.File(options.file),
-        new transports.Console(options.console)
+        new transports.File(options.file)
     ],
     exitOnError: false
 });
+
+if (process.env.NODE_ENV !== 'production') {
+    logger.add(new transports.Console(options.console));
+}
 
 module.exports = logger;
