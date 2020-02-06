@@ -2,7 +2,11 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 const fs = require('fs').promises;
 const cliProgress = require('cli-progress');
+const slugify = require('./slugify.js');
+const logger = require('../config/winston.js');
 const util = require('util');
+
+const filename = 'scraper.js';
 
 async function scrapeData() {
     for (let i = 1; i <= 23; i++) {
@@ -18,14 +22,26 @@ async function scrapeData() {
             pageUrl = `https://www.budgetbytes.com/category/recipes/page/${i}`;
         }
 
-        const recipeUrls = await fetchRecipeUrls(pageUrl);
+        let recipeUrls;
+        try {
+            recipeUrls = await fetchRecipeUrls(pageUrl);
+        } catch(e) {
+            logger.error(`Unable to get recipe urls from ${pageUrl} [${filename}]`);
+            logger.error(e);
+        }
 
         bar.start(recipeUrls.length, 0);
 
         let usablePagesCount = 0;
         
         for (const url of recipeUrls) {
-            const recipes = await fetchRecipesOnPage(url);
+            let recipes;
+            try {
+                recipes = await fetchRecipesOnPage(url);
+            } catch (e) {
+                logger.error(`Unable to get recipes on page ${url.href} [${filename}]`);
+                logger.error(e);
+            }
             // console.log(util.inspect(recipes, false, null, true));
             if (recipes.length > 0) {
                 await writeFile(recipes);
@@ -39,7 +55,13 @@ async function scrapeData() {
 }
 
 async function fetchRecipeUrls(pageUrl) {
-    const response = await axios.get(pageUrl)
+    let response;
+    try {
+        response = await axios.get(pageUrl);
+    } catch (e) {
+        logger.error(`Unable to get page ${pageUrl} [${filename}]`);
+        logger.error(e);
+    }
     const $ = cheerio.load(response.data);
 
     return $('.archive-post > a').map((index, element) => {
@@ -53,7 +75,13 @@ async function fetchRecipeUrls(pageUrl) {
 }
 
 async function fetchRecipesOnPage(url) {
-    const response = await axios.get(url.href);
+    let response;
+    try {
+        response = await axios.get(url.href);
+    } catch(e) {
+        logger.error(`Unable to get url ${url.href} [${filename}]`);
+        logger.error(e);
+    }
     const $ = cheerio.load(response.data);
 
     const recipes = $('div.wprm-recipe-container').map((idx, el) => {
@@ -69,8 +97,11 @@ async function fetchRecipesOnPage(url) {
         
         const recipeImageSrc = url.imageSrc;
 
-        const recipeName = $(el).find('h2.wprm-recipe-name').text();
+        const recipeName = $(el).find('h2.wprm-recipe-name').text().replace('&', 'and');
         // console.log(recipeName);
+
+        const recipeSlug = slugify(recipeName.replace(/["\\\/?.,;:'\[\]{}\(\)|~`]/gi, ''));
+        // console.log(recipeSlug);
 
         const recipeSummary = $(el).find('.wprm-recipe-summary > span').text();
         // console.log(recipeSummary);
@@ -137,6 +168,7 @@ async function fetchRecipesOnPage(url) {
         recipe.sourceUrl = recipeSourceUrl;
         recipe.imageSrc = recipeImageSrc;
         recipe.name = recipeName;
+        recipe.slug = recipeSlug;
         recipe.summary = recipeSummary;
         recipe.author = recipeAuthor;
         recipe.prepTime = recipePrepTime;
@@ -156,9 +188,10 @@ async function fetchRecipesOnPage(url) {
 async function writeFile(recipes) {
     let json = JSON.stringify(recipes);
     try {
-        await fs.writeFile(`recipes\\${recipes[0].name.replace(/["\\\/?.,;:'\[\]{}()|~`]/gi, '')}.json`, json, 'utf8');
-    } catch (err) {
-        console.log('Error writing file', err);
+        await fs.writeFile(`recipes\\${recipes[0].slug}.json`, json, 'utf8');
+    } catch (e) {
+        logger.error(`Error writing file [${filename}]`);
+        logger.error(e);
     }
 }
 

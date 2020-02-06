@@ -12,6 +12,7 @@ class RecipeRepository {
             source_url TEXT,
             image_src TEXT,
             name TEXT,
+            slug TEXT,
             summary TEXT,
             author TEXT,
             prep_time TEXT,
@@ -23,15 +24,23 @@ class RecipeRepository {
         return await this.dao.run(sql);
     }
 
+    async createSlugIndex() {
+        const sql = `
+            CREATE UNIQUE INDEX idx_recipes_slug
+            ON recipes (slug)
+        `;
+        return await this.dao.run(sql);
+    }
+
     async insert(recipe) {
         return await this.dao.run(
             `
             INSERT INTO recipes 
-                (source_id, source_name, source_url, image_src, name, summary, author, prep_time, cook_time, servings, serving_size)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (source_id, source_name, source_url, image_src, name, slug, summary, author, prep_time, cook_time, servings, serving_size)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `,
             [
-                recipe.id, recipe.source, recipe.sourceUrl, recipe.imageSrc, recipe.name, recipe.summary, recipe.author, recipe.prepTime,
+                recipe.id, recipe.source, recipe.sourceUrl, recipe.imageSrc, recipe.name, recipe.slug, recipe.summary, recipe.author, recipe.prepTime,
                 recipe.cookTime, recipe.servings, recipe.servingSize
             ]
         );
@@ -40,11 +49,11 @@ class RecipeRepository {
     async fetchAll() {
         return await this.dao.all(
             `
-            SELECT recipes.id, recipes.name, recipes.image_src, count(*) AS ingredient_count
+            SELECT recipes.id, recipes.name, recipes.image_src, recipes.slug, count(*) AS ingredient_count
             FROM recipes
             JOIN ingredient_groups ON recipes.id = ingredient_groups.recipe_id
             JOIN ingredients ON ingredient_groups.id = ingredients.ingredient_group_id
-            GROUP BY recipes.id, recipes.name
+            GROUP BY recipes.id, recipes.name, recipes.image_src, recipes.slug
             ORDER BY recipes.name
             `
         );
@@ -57,10 +66,17 @@ class RecipeRepository {
         );
     }
 
+    async fetchBySlug(slug) {
+        return await this.dao.get(
+            'SELECT * FROM recipes WHERE slug = ?',
+            [slug]
+        );
+    }
+
     async search(query) {
         return await this.dao.all(
             `
-            SELECT recipes.id, recipes.name, recipes.image_src, count(*) AS ingredient_count
+            SELECT recipes.id, recipes.name, recipes.image_src, recipes.slug, count(*) AS ingredient_count
             FROM recipes
             JOIN ingredient_groups ON recipes.id = ingredient_groups.recipe_id
             JOIN ingredients ON ingredient_groups.id = ingredients.ingredient_group_id
@@ -70,7 +86,7 @@ class RecipeRepository {
                 JOIN ingredients i ON ig.id = i.ingredient_group_id
                 WHERE i.name LIKE ? OR r.name LIKE ?
             )
-            GROUP BY recipes.id, recipes.name
+            GROUP BY recipes.id, recipes.name, recipes.image_src, recipes.slug
             ORDER BY recipes.name
             `,
             ['%' + query + '%', '%' + query + '%']
