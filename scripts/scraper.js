@@ -156,7 +156,7 @@ async function fetchRecipesOnPage(url) {
 async function writeFile(recipes) {
     let json = JSON.stringify(recipes);
     try {
-        await fs.writeFile(`recipes\\${recipes[0].name.replace(/["\\/?.,;:'\[\]{}|~`]/gi, '')}.json`, json, 'utf8');
+        await fs.writeFile(`recipes\\${recipes[0].name.replace(/["\\\/?.,;:'\[\]{}()|~`]/gi, '')}.json`, json, 'utf8');
     } catch (err) {
         console.log('Error writing file', err);
     }
