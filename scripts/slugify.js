@@ -9,3 +9,5 @@ function slugify(inputString) {
 
     return result;
 }
+
+module.exports = slugify;
