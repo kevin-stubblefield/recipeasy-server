@@ -37,6 +37,16 @@ class RecipeController {
         logger.debug(`<<<< Exiting getRecipeById() [${filename}]`);
         return result;
     }
+
+    async getRecipeBySlug(slug) {
+        logger.debug(`>>>> Entering getRecipeBySlug(slug=${slug}) [${filename}]`);
+
+        const recipe = await this.recipeRepository.fetchBySlug(slug);
+        const result = this.buildRecipeObject(recipe);
+
+        logger.debug(`<<<< Exiting getRecipeBySlug() [${filename}]`);
+        return result;
+    }
     
     async searchRecipes(query) {
         logger.debug(`>>>> Entering getRecipeById(query=${query}) [${filename}]`);
