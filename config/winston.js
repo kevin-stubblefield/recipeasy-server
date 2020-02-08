@@ -7,7 +7,7 @@ const logFormat = printf(info => {
 
 const options = {
     file: {
-        level: 'warn',
+        level: 'info',
         filename: './logs/app.log',
         handleExceptions: true,
         maxsize: 5242880,
