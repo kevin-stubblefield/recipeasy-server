@@ -62,15 +62,7 @@ class RecipeController {
 
         let results = [];
         for (const recipe of recipes) {
-            recipe.ingredientGroups = await this.ingredientGroupsRepository.fetchByRecipeId(recipe.id);
-            const ingredientGroupIds = recipe.ingredientGroups.map((ingredientGroup) => ingredientGroup.id);
-            const ingredients = await this.ingredientsRepository.fetchByIngredientGroupIds(ingredientGroupIds);
-            for (const ingredientGroup of recipe.ingredientGroups) {
-                ingredientGroup.ingredients = ingredients.filter((ingredient) => ingredient.ingredientGroupId === ingredientGroup.id);
-            }
-            recipe.instructions = await this.instructionsRepository.fetchByRecipeId(recipe.id);
-            recipe.nutritionInfo = await this.nutritionInfoRepository.fetchByRecipeId(recipe.id);
-            results.push(recipe);
+            results.push(this.buildRecipeObject(recipe));
         }
 
         logger.debug(`<<<< Exiting buildRecipeObjects() [${filename}]`);
