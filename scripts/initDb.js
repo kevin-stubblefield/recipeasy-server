@@ -6,9 +6,9 @@ const Instructions = require('../db/instructionRepository');
 const NutritionInfo = require('../db/nutritionRepository');
 const logger = require('../config/winston.js');
 
-const filename = 'init.js';
+const filename = 'initDb.js';
 
-async function init() {
+async function initDb() {
     const dao = new DAO('./database.rec');
     const recipes = new Recipes(dao);
     const ingredientGroups = new IngredientGroups(dao);
@@ -28,4 +28,4 @@ async function init() {
     logger.info(`tables created [${filename}]`);
 }
 
-init();
+initDb();

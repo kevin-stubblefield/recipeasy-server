@@ -9,7 +9,7 @@ const NutritionInfo = require('../db/nutritionRepository');
 
 const cliProgress = require('cli-progress');
 
-async function loadData() {
+async function loadRecipesToDb() {
     const dao = new DAO('./database.rec');
     const recipes = new Recipes(dao);
     const ingredientGroups = new IngredientGroups(dao);
@@ -55,4 +55,4 @@ async function loadData() {
     bar.stop();
 }
 
-loadData();
+loadRecipesToDb();
