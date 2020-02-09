@@ -17,7 +17,7 @@ async function loadRecipesToDb() {
     const instructions = new Instructions(dao);
     const nutritionInfo = new NutritionInfo(dao);
 
-    const file = await fs.readFile(path.join(__dirname, '..', 'budgetBytes.json'));
+    const file = await fs.readFile(path.join(__dirname, '..', 'recipes', 'budgetBytes.json'));
     const recipeData = JSON.parse(file.toString('utf-8'));
     const bar = new cliProgress.SingleBar({
         format: 'ETL Progress |{bar}| {percentage}% | {value}/{total} Files Processed | {duration}s',
