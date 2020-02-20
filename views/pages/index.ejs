@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head', { title: title }) %>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <% locals.recipes.forEach(function(recipe) { %>
+        <article>
+            <a href="/<%= recipe.slug %>"><%= recipe.name %></a>
+        </article>
+    <% }); %>
+</body>
+</html>

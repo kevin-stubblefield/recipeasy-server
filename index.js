@@ -10,11 +10,13 @@ const filename = 'index.js';
 
 const PORT = process.env.port || 3000;
 
-// app.use(cors({
-//     origin: 'http://recipeasy.stubblefield.io',
-//     optionsSuccessStatus: 200
-// }));
-// app.use(helmet());
+app.set('view engine', 'ejs');
+
+app.use(cors({
+    origin: 'http://recipeasy.stubblefield.io',
+    optionsSuccessStatus: 200
+}));
+app.use(helmet());
 app.use(morgan(
     ':remote-addr :method :url HTTP/:http-version :status :res[content-length]B - :response-time ms',
     { stream: logger.stream }

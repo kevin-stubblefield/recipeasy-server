@@ -1,0 +1,19 @@
+<ul>
+<% recipe.ingredientGroups[0].ingredients.forEach(function(ingredient) { %>
+    <li>
+        <% if (ingredient.amount) { %>
+        <span>
+            <%= ingredient.amount %>
+        </span>
+        <% } %>
+        <% if (ingredient.unit) { %>
+        <span>
+            <%= ingredient.unit %>
+        </span>
+        <% } %>
+        <span>
+            <%= ingredient.name %>
+        </span>
+    </li>
+<% }); %>
+</ul>
