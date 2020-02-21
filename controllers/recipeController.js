@@ -48,10 +48,18 @@ class RecipeController {
         return result;
     }
     
-    async searchRecipes(query) {
-        logger.debug(`>>>> Entering getRecipeById(query=${query}) [${filename}]`);
+    async searchRecipes(query, sortBy) {
+        logger.debug(`>>>> Entering getRecipeById(query=${query}, sortBy=${sortBy}) [${filename}]`);
 
-        const recipes = await this.recipeRepository.search(query);
+        let recipes = await this.recipeRepository.search(query);
+
+        if (sortBy === 'ingredients') {
+            recipes = recipes.sort((a, b) => {
+                if (a.ingredientCount < b.ingredientCount) return -1;
+                if (a.ingredientCount > b.ingredientCount) return 1;
+                return 0;
+            });
+        }
 
         logger.debug(`<<<< Exiting searchRecipes() [${filename}]`);
         return recipes;

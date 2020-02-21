@@ -10,8 +10,9 @@ router.get('/', async (req, res) => {
 
 router.get('/search', async (req, res) => {
     const query = req.query.q;
+    const sortBy = req.query.sort;
     const recipeController = new RecipeController();
-    const recipes = await recipeController.searchRecipes(query);
+    const recipes = await recipeController.searchRecipes(query, sortBy);
     return res.render('pages/index', { title: query, recipes });
 });
 
