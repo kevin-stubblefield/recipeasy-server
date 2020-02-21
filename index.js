@@ -22,6 +22,7 @@ app.use(morgan(
     { stream: logger.stream }
 ));
 
+app.get('/favicon.ico', (req, res) => res.status(204));
 app.use('/', recipeRoutes);
 
 app.listen(PORT, () => {
