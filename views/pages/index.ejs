@@ -5,10 +5,12 @@
 </head>
 <body>
     <%- include('../partials/header') %>
+    <div class="container">
     <% locals.recipes.forEach(function(recipe) { %>
-        <article>
+        <article class="card">
             <a href="/<%= recipe.slug %>"><%= recipe.name %></a>
         </article>
     <% }); %>
+    </div>
 </body>
 </html>
