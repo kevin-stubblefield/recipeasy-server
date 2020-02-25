@@ -10,6 +10,7 @@ const filename = 'index.js';
 
 const PORT = process.env.port || 3000;
 
+app.set('trust proxy', true);
 app.set('view engine', 'ejs');
 
 app.use(cors());
