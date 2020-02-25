@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "node ./index.js",
+    "init-dev": "node ./scripts/initDb.js",
+    "load-dev": "node ./scripts/loadRecipesToDb.js",
+    "init-prod": "NODE_ENV=production nodejs ./scripts/initDb.js",
+    "load-prod": "NODE_ENV=production nodejs ./scripts/loadRecipesToDb.js",
     "start": "NODE_ENV=production pm2 start ./index.js --name \"recipeasy\""
   },
   "author": "Kevin Stubblefield",

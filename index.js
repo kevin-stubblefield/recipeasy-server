@@ -5,10 +5,9 @@ const morgan = require('morgan');
 const app = express();
 const recipeRoutes = require('./routes/recipes.js');
 const logger = require('./config/winston.js');
+const { port } = require('./config');
 
 const filename = 'index.js';
-
-const PORT = process.env.port || 3000;
 
 app.set('trust proxy', true);
 app.set('view engine', 'ejs');
@@ -23,6 +22,6 @@ app.use(morgan(
 app.get('/favicon.ico', (req, res) => res.status(204));
 app.use('/', recipeRoutes);
 
-app.listen(PORT, () => {
-    logger.info(`Server listening on port ${PORT} [${filename}]`);
+app.listen(port, () => {
+    logger.info(`Server listening on port ${port} [${filename}]`);
 });

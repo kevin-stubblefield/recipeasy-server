@@ -3,3 +3,6 @@ database.rec
 errors/
 testingstuff.js
 logs/
+config/config.development.js
+config/config.production.js
+config/config.test.js

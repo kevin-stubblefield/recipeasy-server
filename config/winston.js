@@ -1,5 +1,6 @@
 const { format, createLogger, transports } = require('winston');
 const { combine, colorize, timestamp, printf, json } = format;
+const { logPath } = require('./index');
 
 const logFormat = printf(info => {
     return `${info.timestamp} ${info.level}: ${info.message}`;
@@ -8,7 +9,7 @@ const logFormat = printf(info => {
 const options = {
     file: {
         level: 'info',
-        filename: './logs/app.log',
+        filename: logPath,
         handleExceptions: true,
         maxsize: 5242880,
         maxFiles: 5,

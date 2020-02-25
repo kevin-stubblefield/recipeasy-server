@@ -6,12 +6,13 @@ const Instructions = require('../db/instructionRepository');
 const NutritionInfo = require('../db/nutritionRepository');
 
 const logger = require('../config/winston.js');
+const { dbPath } = require('../config');
 
 const filename = 'recipeController.js';
 
 class RecipeController {
     constructor() {
-        this.dao = new DAO('./database.rec');
+        this.dao = new DAO(dbPath);
         this.recipeRepository = new Recipes(this.dao);
         this.ingredientGroupsRepository = new IngredientGroups(this.dao);
         this.ingredientsRepository = new Ingredients(this.dao);

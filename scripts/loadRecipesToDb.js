@@ -7,10 +7,11 @@ const Ingredients = require('../db/ingredientRepository');
 const Instructions = require('../db/instructionRepository');
 const NutritionInfo = require('../db/nutritionRepository');
 
+const { dbPath } = require('../config');
 const cliProgress = require('cli-progress');
 
 async function loadRecipesToDb() {
-    const dao = new DAO('./database.rec');
+    const dao = new DAO(dbPath);
     const recipes = new Recipes(dao);
     const ingredientGroups = new IngredientGroups(dao);
     const ingredients = new Ingredients(dao);
