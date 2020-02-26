@@ -54,7 +54,7 @@ class RecipeRepository {
             JOIN ingredient_groups ON recipes.id = ingredient_groups.recipe_id
             JOIN ingredients ON ingredient_groups.id = ingredients.ingredient_group_id
             GROUP BY recipes.id, recipes.name, recipes.image_src, recipes.slug
-            ORDER BY recipes.name
+            ORDER BY recipes.name COLLATE NOCASE
             `
         );
     }
@@ -87,7 +87,7 @@ class RecipeRepository {
                 WHERE i.name LIKE ? OR r.name LIKE ?
             )
             GROUP BY recipes.id, recipes.name, recipes.image_src, recipes.slug
-            ORDER BY recipes.name
+            ORDER BY recipes.name COLLATE NOCASE
             `,
             ['%' + query + '%', '%' + query + '%']
         );
