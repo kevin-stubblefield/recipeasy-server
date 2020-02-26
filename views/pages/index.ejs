@@ -7,12 +7,14 @@
     <%- include('../partials/header') %>
     <div class="container">
     <% locals.recipes.forEach(function(recipe) { %>
+    <a href="/<%= recipe.slug %>">
         <article class="card">
-            <a href="/<%= recipe.slug %>"><%= recipe.name %></a>
+            <span><%= recipe.name %></span>
             <section class="footer">
                 <div>Ingredients: <%= recipe.ingredientCount %></div>
             </section>
         </article>
+    </a>
     <% }); %>
     </div>
 </body>
