@@ -9,6 +9,9 @@
     <% locals.recipes.forEach(function(recipe) { %>
         <article class="card">
             <a href="/<%= recipe.slug %>"><%= recipe.name %></a>
+            <section class="footer">
+                <div>Ingredients: <%= recipe.ingredientCount %></div>
+            </section>
         </article>
     <% }); %>
     </div>

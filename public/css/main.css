@@ -133,3 +133,14 @@ option {
 #attribution a:hover {
     color: #777;
 }
+
+.card > .footer {
+    margin-bottom: 0;
+}
+
+.card > .footer > div {
+    font-size: .85rem;
+    color: #777;
+    margin-top: .25rem;
+    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+}
