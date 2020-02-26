@@ -2,10 +2,10 @@
 <% recipe.ingredientGroups.forEach(function(ingredientGroup) { %>
     <li>
         <% if (ingredientGroup.heading) { %>
-            <span><%= ingredientGroup.heading %></span>
+            <h2><%= ingredientGroup.heading %></h2>
         <% } %>
 
-        <ul>
+        <ul class="ingredients">
         <% ingredientGroup.ingredients.forEach(function(ingredient) { %>
             <li>
                 <% if (ingredient.amount) { %>
