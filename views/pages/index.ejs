@@ -9,7 +9,8 @@
     <% locals.recipes.forEach(function(recipe) { %>
     <a href="/<%= recipe.slug %>">
         <article class="card">
-            <span><%= recipe.name %></span>
+            <img src="<%= recipe.imageSrc %>">
+            <div><%= recipe.name %></div>
             <section class="footer">
                 <div>Ingredients: <%= recipe.ingredientCount %></div>
             </section>

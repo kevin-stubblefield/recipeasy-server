@@ -62,13 +62,13 @@ ul {
 }
 
 .card {
-    padding: .5rem;
+    padding-bottom: .5rem;
     box-shadow: 0 2px 4px -3px #000;
     border-radius: .25rem;
     background: #fff;
     cursor: pointer;
     width: 15rem;
-    height: 5rem;
+    height: max-content;
     margin-right: .5rem;
     margin-bottom: .5rem;
     transition: transform .1s;
@@ -139,4 +139,15 @@ select {
     font-size: .85rem;
     color: var(--secondary-font-color);
     margin-top: .25rem;
+}
+
+.card > img {
+    width: 100%;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    margin-bottom: .25rem;
+}
+
+.card > div, .card > .footer {
+    margin: 0 .5rem .5rem .5rem;
 }

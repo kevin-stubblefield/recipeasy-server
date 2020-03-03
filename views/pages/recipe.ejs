@@ -35,7 +35,7 @@
         <% } %>
         <section id="attribution">
             <p>Sourced From: <%= recipe.sourceName %></p>
-            <p>Original Link: <a href="<%= recipe.sourceUrl %>"><%= recipe.sourceUrl %></a></p>
+            <p>Original Link: <a href="<%= recipe.sourceUrl %>" target="_blank" rel="noopener noreferrer"><%= recipe.sourceUrl %></a></p>
             <% if (recipe.author) { %>
                 <p>Author: <%= recipe.author %></p>
             <% } %>
