@@ -1,11 +1,18 @@
-body {
-    background: #fff;
+:root {
+    font-size: 16px;
+    --primary-font-color: #444;
+    --secondary-font-color: #777;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, li {
+body {
+    background: #fefff0;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, li, div, option, select, input, a {
     font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
     font-weight: 300;
-    color: #444;
+    font-size: 1rem;
+    color: var(--primary-font-color);
 }
 
 h1, h2 {
@@ -31,11 +38,7 @@ p, li {
 }
 
 a, a:visited {
-    color: #444;
     text-decoration: none;
-    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
-    font-weight: 300;
-    font-size: 1rem;
 }
 
 header {
@@ -60,11 +63,12 @@ ul {
 
 .card {
     padding: .5rem;
-    border: 1px solid #333;
-    border-radius: 2px;
+    box-shadow: 0 2px 4px -3px #000;
+    border-radius: .25rem;
     background: #fff;
     cursor: pointer;
-    width: max-content;
+    width: 15rem;
+    height: 5rem;
     margin-right: .5rem;
     margin-bottom: .5rem;
     transition: transform .1s;
@@ -79,7 +83,6 @@ ul {
 }
 
 input {
-    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
     font-size: 1rem;
     border: 1px solid #333;
     border-radius: 2px;
@@ -95,21 +98,15 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background: rgb(151, 216, 142);
+    background: #fafafa;
 }
 
 select {
-    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
-    font-size: 1rem;
     border: 1px solid #333;
     border-radius: 2px;
     width: 10rem;
     padding: .25rem;
     margin-top: .5rem;
-}
-
-option {
-    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
 }
 
 .recipe-details {
@@ -131,7 +128,7 @@ option {
 }
 
 #attribution a:hover {
-    color: #777;
+    color: var(--secondary-font-color);
 }
 
 .card > .footer {
@@ -140,7 +137,6 @@ option {
 
 .card > .footer > div {
     font-size: .85rem;
-    color: #777;
+    color: var(--secondary-font-color);
     margin-top: .25rem;
-    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
 }
