@@ -15,9 +15,9 @@
         <% } %>
         </section>
         <section id="instructions">
-            <ol>
+            <ol class="instructions-list">
                 <% recipe.instructions.forEach(function(instruction) { %>
-                    <li><%= instruction.description %></li>
+                    <li class="instruction"><%= instruction.description %></li>
                 <% }); %>
             </ol>
         </section>
@@ -34,8 +34,8 @@
         </section>
         <% } %>
         <section id="attribution">
-            <p>Sourced From: <%= recipe.sourceName %></p>
-            <p>Original Link: <a href="<%= recipe.sourceUrl %>" target="_blank" rel="noopener noreferrer"><%= recipe.sourceUrl %></a></p>
+            <p class="attribution__source-name">Sourced From: <%= recipe.sourceName %></p>
+            <p>Original Link: <a class="attribution__source-link" href="<%= recipe.sourceUrl %>" target="_blank" rel="noopener noreferrer"><%= recipe.sourceUrl %></a></p>
             <% if (recipe.author) { %>
                 <p>Author: <%= recipe.author %></p>
             <% } %>

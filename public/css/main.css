@@ -61,27 +61,6 @@ ul {
     padding: 1rem;
 }
 
-.card {
-    padding-bottom: .5rem;
-    box-shadow: 0 2px 4px -3px #000;
-    border-radius: .25rem;
-    background: #fff;
-    cursor: pointer;
-    width: 15rem;
-    height: max-content;
-    margin-right: .5rem;
-    margin-bottom: .5rem;
-    transition: transform .1s;
-}
-
-.card:hover {
-    transform: scale(1.1);
-}
-
-.card > span {
-    text-transform: uppercase;
-}
-
 input, .btn {
     font-size: 1rem;
     border: 1px solid #333;
@@ -119,41 +98,61 @@ select {
     padding: 1rem;
 }
 
-#instructions > ol > li {
+.instructions-list > .instruction {
     list-style-type: decimal;
     margin-left: 1rem;
     margin-bottom: .5rem;
 }
 
-#attribution > p {
+.attribution__source-name {
     margin-bottom: .25rem;
 }
 
-#attribution a {
+.attribution__source-link {
     text-decoration: underline;
 }
 
-#attribution a:hover {
+.attribution__source-link:hover {
     color: var(--secondary-font-color);
 }
 
-.card > .footer {
-    margin-bottom: 0;
+.card {
+    box-shadow: 0 2px 4px -3px #000;
+    border-radius: .25rem;
+    background: #fff;
+    cursor: pointer;
+    width: 15rem;
+    height: max-content;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    transition: transform .1s;
 }
 
-.card > .footer > div {
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card__title {
+    text-transform: uppercase;
+}
+
+.card__content {
+    padding-bottom: 0.5rem;
+}
+
+.card__footer {
     font-size: .85rem;
     color: var(--secondary-font-color);
     margin-top: .25rem;
 }
 
-.card > img {
+.card__image {
     width: 100%;
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
     margin-bottom: .25rem;
 }
 
-.card > div, .card > .footer {
+.card__title, .card__footer {
     margin: 0 .5rem .5rem .5rem;
 }

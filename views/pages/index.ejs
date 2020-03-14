@@ -5,14 +5,16 @@
 </head>
 <body>
     <%- include('../partials/header') %>
-    <div class="container">
+    <section class="container">
     <% locals.recipes.forEach(function(recipe) { %>
     <a href="/<%= recipe.slug %>">
         <article class="card">
-            <img src="<%= recipe.imageSrc %>">
-            <div class="title"><%= recipe.name %></div>
-            <section class="footer">
-                <div>Ingredients: <%= recipe.ingredientCount %></div>
+            <img class="card__image" src="<%= recipe.imageSrc %>">
+            <section class="card__content">
+                <section class="card__title"><%= recipe.name %></section>
+                <section class="card__footer">
+                    Ingredients: <%= recipe.ingredientCount %>
+                </section>
             </section>
         </article>
     </a>
