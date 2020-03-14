@@ -9,7 +9,7 @@
     <% locals.recipes.forEach(function(recipe) { %>
     <a href="/<%= recipe.slug %>">
         <article class="card">
-            <img class="card__image" src="<%= recipe.imageSrc %>">
+            <img class="card__image card__image--lazy" src="" data-src="<%= recipe.imageSrc %>">
             <section class="card__content">
                 <section class="card__title"><%= recipe.name %></section>
                 <section class="card__footer">
@@ -20,5 +20,7 @@
     </a>
     <% }); %>
     </div>
+
+    <script src="/js/main.js"></script>
 </body>
 </html>
