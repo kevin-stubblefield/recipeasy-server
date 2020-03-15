@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const favicon = require('serve-favicon');
+const path = require('path');
 const app = express();
 const recipeRoutes = require('./routes/recipes.js');
 const logger = require('./config/winston.js');
@@ -21,7 +23,7 @@ app.use(morgan(
     { stream: logger.stream }
 ));
 
-app.get('/favicon.ico', (req, res) => res.status(204));
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use('/', recipeRoutes);
 
 app.listen(port, () => {
